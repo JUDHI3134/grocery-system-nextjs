@@ -1,12 +1,10 @@
 "use client"
-import { ArrowLeft, EyeIcon, EyeOff, Leaf, Loader2, Lock, LogIn, Mail, User } from 'lucide-react'
+import { EyeIcon, EyeOff, Leaf, Loader2, Lock, LogIn, Mail, User } from 'lucide-react'
 import React, { useState } from 'react'
 import { motion } from "motion/react"
 import googleImage from "@/assets/google.png"
 import Image from 'next/image'
-import axios from 'axios'
 import { useRouter } from 'next/navigation'
-import toast from 'react-hot-toast'
 import { signIn, useSession } from 'next-auth/react'
 
 
@@ -20,7 +18,7 @@ const Login = () => {
     const [loading, setLoading] = useState(false)
 
     const session = useSession();
-    console.log(session)
+    // console.log(session)
 
     const handleLogin = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -80,12 +78,11 @@ const Login = () => {
                   <span className='flex-1 h-px bg-gray-200'></span>
               </div>
 
-
-              <button className='w-full flex items-center justify-center gap-3 border border-gray-300 hover:bg-gray-50 py-3 rounded-xl text-gray-700 font-medium transition-all duration-200 cursor-pointer'>
+          </motion.form>
+           <button onClick={() => signIn("google")} className='w-full max-w-sm mt-3 flex items-center justify-center gap-3 border border-gray-300 hover:bg-gray-50 py-3 rounded-xl text-gray-700 font-medium transition-all duration-200 cursor-pointer'>
                   <Image src={googleImage} alt='google' width={20} height={20} />
                   Continue with Google
               </button>
-          </motion.form>
           <p className='text-gray-600 mt-6 text-sm flex items-center gap-1'>Don't have an account? <LogIn className='w-4 h-4' /><span onClick={() => router.push("/register")} className='text-green-600 cursor-pointer'>Register</span></p>
 
     </div>

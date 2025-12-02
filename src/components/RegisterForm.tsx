@@ -7,6 +7,7 @@ import Image from 'next/image'
 import axios from 'axios'
 import toast from 'react-hot-toast'
 import { useRouter } from 'next/navigation'
+import { signIn, useSession } from 'next-auth/react'
 
 type PropType={
     previousStep: (s:number) => void
@@ -22,6 +23,9 @@ const RegisterForm = ({ previousStep }: PropType) => {
     const [showPassword, setShowPassword] = useState(false)
     const [loading, setLoading] = useState(false)
 
+    const session = useSession();
+    // console.log(session)
+
     const handleRegister = async (e: React.FormEvent) => {
         e.preventDefault();
         setLoading(true)
@@ -36,7 +40,6 @@ const RegisterForm = ({ previousStep }: PropType) => {
             }
         } catch (error) {
             console.log(error)
-            toast.error("error at registration")
         } finally {
             setLoading(false);
         }
@@ -95,11 +98,13 @@ const RegisterForm = ({ previousStep }: PropType) => {
               </div>
 
 
-              <button className='w-full flex items-center justify-center gap-3 border border-gray-300 hover:bg-gray-50 py-3 rounded-xl text-gray-700 font-medium transition-all duration-200 cursor-pointer'>
+          </motion.form>
+              <button onClick={() => signIn("google")} className='w-full max-w-sm mt-3 flex items-center justify-center gap-3 border border-gray-300 hover:bg-gray-50 py-3 rounded-xl text-gray-700 font-medium transition-all duration-200 cursor-pointer'>
                   <Image src={googleImage} alt='google' width={20} height={20} />
                   Continue with Google
               </button>
-          </motion.form>
+
+
           <p className='text-gray-600 mt-6 text-sm flex items-center gap-1'>Already have an account? <LogIn className='w-4 h-4' /><span onClick={() => router.push("/login")} className='text-green-600 cursor-pointer'>Sign in</span></p>
 
     </div>
